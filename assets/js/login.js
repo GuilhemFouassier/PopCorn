@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .fetch()
                     .then(jsonData => {
                         localStorage.setItem('user_id', jsonData.data.user._id);
-                        localStorage.setItem('user_pseudo', jsonData.data.use.pseudo);
+                        localStorage.setItem('user_pseudo', jsonData.data.user.pseudo);
                         document.location.href="index.html";
                     })
                     .catch(error => {

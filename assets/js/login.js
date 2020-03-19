@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     })
                     .fetch()
                     .then(jsonData => {
-                        localStorage.setItem('user_id', jsonData.data.identity._id);
-                        localStorage.setItem('user_pseudo', jsonData.data.identity.pseudo);
+                        localStorage.setItem('user_id', jsonData.data.user._id);
+                        localStorage.setItem('user_pseudo', jsonData.data.use.pseudo);
                         document.location.href="index.html";
                     })
                     .catch(error => {

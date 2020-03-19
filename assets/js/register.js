@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const userEmail = document.querySelector('[name="email"]');
     const userPassword = document.querySelector('[name="password"]');
     const userPseudo = document.querySelector('[name="pseudo"]');
-    const apiUrl = 'https://api.dwsapp.io';
+    const apiUrl = 'https://kebabtv.dwsapp.io';
     const formError = document.querySelector('#formRegister span');
     const getRegisterSubmit = () => {
         registerForm.addEventListener('submit', (event) => {

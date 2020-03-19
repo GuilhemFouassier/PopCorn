@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.querySelector('#formLogin');
     const userEmail = document.querySelector('[name="email"]');
     const userPassword = document.querySelector('[name="password"]');
-    const apiUrl = 'https://api.dwsapp.io';
+    const apiUrl = 'https://kebabtv.dwsapp.io';
     const formError = document.querySelector('#formLogin span');
 
     const getLoginSubmit = () => {

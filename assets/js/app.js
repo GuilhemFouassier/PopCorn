@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const theMoviedbUrlDiscover = 'https://api.themoviedb.org/3/discover/movie?api_key=b7121cc0458344957693c216d595c487';
     const movieList = document.querySelector('#movieList');
     const moviePopin = document.querySelector('#moviePopin article');
-    const apiUrl = 'https://api.dwsapp.io';
+    const apiUrl = 'https://kebabtv.dwsapp.io';
     const FavoriteContainer = document.querySelector('#favoriteList');
     const favoriteList = document.querySelector('#favoriteList ul');
     const NavConnected = document.querySelector('#connectedList');

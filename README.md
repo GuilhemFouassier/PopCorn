@@ -1,10 +1,2 @@
-# PopCorn - Javascript - FOUASSIER Guilhem
+# PopCorn.Tv
 
-
-message :
-CHAT OBJECT
-{
-	author: String (_id),
-    pseudo: String
-    message: String,
-}

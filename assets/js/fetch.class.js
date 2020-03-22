@@ -6,7 +6,7 @@ class FETCHrequest {
         this.data = data;
 
         // Définition du header de la requête
-        this.requestHeader = {
+        this.fetchOptions = {
             method: requestType,
             headers: {
                 'Content-Type': 'application/json'
@@ -14,28 +14,28 @@ class FETCHrequest {
         };
 
         // Ajouter les données dans les requêtes POST et PUT
-        if( this.requestType === 'POST' || this.requestType === 'PUT'){
-            this.requestHeader.body = JSON.stringify(data);
+        if( this.requestType === 'POST' || this.requestType === 'PUT' || this.requestType === 'DELETE'){
+            this.fetchOptions.body = JSON.stringify(data);
         };
     }
 
     
-    fetch(){
+    sendRequest(){
         return new Promise( (resolve, reject) => {
-            fetch( this.url, this.requestHeader )
-            .then( apiResponse => {
+            fetch( this.url, this.fetchOptions )
+            .then( fetchResponse => {
                 // Vérifier le status de la requête
-                if( apiResponse.ok ){
+                if( fetchResponse.ok ){
                     // Extraire les données JSON de la réponse
-                    return apiResponse.json();
+                    return fetchResponse.json();
                 }
                 else{
-                    return apiResponse.json()
+                    return fetchResponse.json()
                     .then( message => reject(message) )
                 };
             })
             .then( jsonData => resolve(jsonData))
-            .catch( apiError => reject(apiError));
+            .catch( jsonError => reject(jsonError));
         })
     }
 }

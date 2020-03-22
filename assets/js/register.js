@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const userPseudo = document.querySelector('[name="pseudo"]');
     const apiUrl = 'https://kebabtv.dwsapp.io';
     const formError = document.querySelector('#formRegister span');
+    const btnMobile = document.querySelector('footer button');
+    const menu = document.querySelector('header');
+    
     const getRegisterSubmit = () => {
         registerForm.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -19,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     password : userPassword.value,
                     pseudo: userPseudo.value
                 })
-                .fetch()
+                .sendRequest()
                 .then(jsonData => {
                     console.log(jsonData);
                     document.location.href="index.html";
@@ -39,5 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000)
     };
 
+    const MenuMobile = () => {
+        btnMobile.addEventListener('click', (event)=> {
+            event.preventDefault();
+            if(btnMobile.classList.contains("close")){
+                menu.classList.remove('menu-open');
+                btnMobile.classList.remove('close')
+            }else{
+                menu.classList.add('menu-open');
+                btnMobile.classList.add('close');
+            }
+            
+        })
+    }
+
     getRegisterSubmit();
+    MenuMobile();
 });

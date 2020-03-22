@@ -14,11 +14,15 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const NavDisconnected = document.querySelector('#disconnectedList');
     const profile = document.querySelector('#connectedList span');
     const btnDisconnected = document.querySelector('#disconnected');
+    const btnMobile = document.querySelector('footer button');
+    const menu = document.querySelector('header');
     /* Fontions */
     const checkUserToken = (step) => {
-        if(localStorage.getItem('user_id')){
-            new FETCHrequest(`${apiUrl}/api/me/${localStorage.getItem('user_id')}`,'GET')
-            .fetch()
+        if(localStorage.getItem('user_token')){
+            new FETCHrequest(`${apiUrl}/api/me/`,'POST', {
+                token : localStorage.getItem('user_token')
+            })
+            .sendRequest()
             .then(jsonData => {
                 if(step === 'favorite'){
                     displayFavorite(jsonData.data.favorite);
@@ -46,13 +50,14 @@ document.addEventListener('DOMContentLoaded', ()=> {
             event.preventDefault();
             localStorage.removeItem('user_id');
             localStorage.removeItem('user_pseudo');
+            localStorage.removeItem('user_token');
             location.reload();
         })
     }
 
     const fetchDefaultMovie = () => {
         new FETCHrequest(`${theMoviedbUrlDiscover}`, 'GET')
-        .fetch()
+        .sendRequest()
         .then(jsonData => {
             displayMovieList(jsonData.results);
         })
@@ -67,7 +72,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
             // Check form data
             if(searchData.value.length > 0 ){
                 new FETCHrequest(`${theMoviedbUrlSearch}&query=${searchData.value}&page=1`, 'GET')
-                .fetch()
+                .sendRequest()
                 .then(jsonData => {
                     displayMovieList(jsonData.results);
                 })
@@ -110,7 +115,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
         for(let link of linkCollection){
             link.addEventListener('click', () =>{
                 new FETCHrequest(`https://api.themoviedb.org/3/movie/${link.getAttribute('movie-id')}?api_key=b7121cc0458344957693c216d595c487`)
-                .fetch()
+                .sendRequest()
                 .then(jsonData => {
                     displayPopin(jsonData);
                 })
@@ -147,11 +152,11 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const addFavorite = (tag, data) => {
         tag.addEventListener('click', () => {
             new FETCHrequest(`${apiUrl}/api/favorite`, 'POST', { 
-                author: localStorage.getItem('user_id'),
+                token: localStorage.getItem('user_token'),
                 id: data.id,
                 title: data.original_title
             })
-            .fetch()
+            .sendRequest()
             .then( jsonData => {
                 checkUserToken('favorite')
             })
@@ -178,8 +183,10 @@ document.addEventListener('DOMContentLoaded', ()=> {
     const deleteFavorite = favorites => {
         for( let item of favorites ){
             item.addEventListener('click', () => {
-                new FETCHrequest( `${apiUrl}/api/favorite/${item.getAttribute('movie-id')}`, 'DELETE' )
-                .fetch()
+                new FETCHrequest( `${apiUrl}/api/favorite/${item.getAttribute('movie-id')}`, 'DELETE', {
+                    token : localStorage.getItem('user_token')
+                })
+                .sendRequest()
                 .then( jsonData => checkUserToken('favorite'))
                 .catch( error => {
                     console.log(error)
@@ -188,9 +195,24 @@ document.addEventListener('DOMContentLoaded', ()=> {
         }
     }
 
+    const MenuMobile = () => {
+        btnMobile.addEventListener('click', (event)=> {
+            event.preventDefault();
+            if(btnMobile.classList.contains("close")){
+                menu.classList.remove('menu-open');
+                btnMobile.classList.remove('close')
+            }else{
+                menu.classList.add('menu-open');
+                btnMobile.classList.add('close');
+            }
+            
+        })
+    }
+
     /* Lancer fonction */
     fetchDefaultMovie();
     getSearchSubmit();
     disconnectProfil();
     checkUserToken();
+    MenuMobile();
 });

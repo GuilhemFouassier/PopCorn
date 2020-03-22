@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const userPassword = document.querySelector('[name="password"]');
     const apiUrl = 'https://kebabtv.dwsapp.io';
     const formError = document.querySelector('#formLogin span');
+    const btnMobile = document.querySelector('footer button');
+    const menu = document.querySelector('header');
 
     const getLoginSubmit = () => {
         loginForm.addEventListener('submit', (event) => {
@@ -17,10 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         email: userEmail.value,
                         password : userPassword.value
                     })
-                    .fetch()
+                    .sendRequest()
                     .then(jsonData => {
                         localStorage.setItem('user_id', jsonData.data.user._id);
                         localStorage.setItem('user_pseudo', jsonData.data.user.pseudo);
+                        localStorage.setItem('user_token', jsonData.data.token);
                         document.location.href="index.html";
                     })
                     .catch(error => {
@@ -39,5 +42,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000)
     };
 
+    const MenuMobile = () => {
+        btnMobile.addEventListener('click', (event)=> {
+            event.preventDefault();
+            if(btnMobile.classList.contains("close")){
+                menu.classList.remove('menu-open');
+                btnMobile.classList.remove('close')
+            }else{
+                menu.classList.add('menu-open');
+                btnMobile.classList.add('close');
+            }
+            
+        })
+    }
+
     getLoginSubmit();
+    MenuMobile();
 });

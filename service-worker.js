@@ -3,6 +3,7 @@ Gestion du cache
 */
 const staticAssets = [
     './',
+    './manifest.json',
     './assets/css/style.css',
     './assets/js/app.js',
     './assets/js/login.js',
